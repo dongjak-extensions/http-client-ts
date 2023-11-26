@@ -1,24 +1,16 @@
 {
   "compilerOptions": {
-    "target": "esnext",
-    "useDefineForClassFields": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "strict": true,
-    "jsx": "preserve",
+    "module": "ESNext",
+    "target": "ESNext",
     "sourceMap": true,
-    "resolveJsonModule": true,
-    "esModuleInterop": true,
-    "lib": ["esnext", "dom"],
+    "outDir": "dist",
     "declaration": true,
-    "emitDeclarationOnly": true,
-//    "declarationDir": "./dist/types",
-    "declarationMap": false,
-    "isolatedModules": true,
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
     "skipLibCheck": true,
-    "types": [
-      "vite/client"
-    ]
+    "allowSyntheticDefaultImports": true
   },
-  "include": ["index.ts"]
+  "exclude": [
+    "node_modules"
+  ]
 }
