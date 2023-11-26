@@ -1,18 +1,18 @@
 {
-    "name": "{{repo_name}}",
+    "name": "http-client-ts",
     "version": "1.0.0",
     "description": "ts库项目模板",
     "publishConfig": {
         "access": "public"
     },
-    "repository": "{{repo_url}}",
+    "repository": "https://github.com/dongjak-extensions/http-client-ts",
     "scripts": {
-        "build": "rimraf dist && dts-bundle-generator -o dist/{{repo_name}}.d.ts index.ts  && vite build",
+        "build": "rimraf dist && dts-bundle-generator -o dist/http-client-ts.d.ts index.ts  && vite build",
         "semantic-release": "semantic-release"
     },
     "keywords": [],
     "type": "module",
-    "author": "{{author}}",
+    "author": "dongjak-extensions",
     "license": "MIT",
     "devDependencies": {
         "@semantic-release/changelog": "^6.0.3",
