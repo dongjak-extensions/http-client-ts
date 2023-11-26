@@ -1,5 +1,5 @@
 {
-    "name": "http-client-ts",
+    "name": "@dongjak-extensions/http-client",
     "version": "1.0.0",
     "description": "声明式http客户端",
     "publishConfig": {
