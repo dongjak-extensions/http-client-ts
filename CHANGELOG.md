@@ -1,3 +1,15 @@
+# [2.0.0](https://github.com/dongjak-extensions/http-client-ts/compare/v1.0.0...v2.0.0) (2023-11-26)
+
+
+### Features
+
+* 修改包名 ([272538f](https://github.com/dongjak-extensions/http-client-ts/commit/272538f82be2b36b60982a000a788e8d2aa454aa))
+
+
+### BREAKING CHANGES
+
+* 改用vite构建
+
 # 1.0.0 (2023-11-26)
 
 
