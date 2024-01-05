@@ -3,7 +3,7 @@
  *
  * ```js
  *    @Post('/rest/:entity/getPage')
- *     getPage<T>(@Config("responseType") responseType: string, @RequestBody() queryPayload: IQueryPayload): Promise<JsonResponse<IPage<T>>> {
+ *     getPage<T>(@Config("responseType") responseType: string,@RequestBody() queryPayload: IQueryPayload): Promise<JsonResponse<IPage<T>>> {
  *         return undefined as any
  *     }
  * ```
