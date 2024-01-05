@@ -39,16 +39,5 @@
   },
   "dependencies": {
     "reflect-metadata": "^0.1.13"
-  },
-  "files": [
-    "dist"
-  ],
-  "typings": "./dist/http-client-ts.d.ts",
-  "module": "./dist/http-client-ts.es.js",
-  "exports": {
-    ".": {
-      "types": "./dist/http-client-ts.d.ts",
-      "import": "./dist/http-client-ts.es.js"
-    }
   }
 }
