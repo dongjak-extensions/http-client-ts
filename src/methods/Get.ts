@@ -23,12 +23,14 @@ export function Get(url: string, mockOnFail?: any) {
                 originalMethod.apply(this, args).then(() => {
                     const finalUrl = target.buildFinalUrl(url, target, propertyKey, ...args)
                     const headers = target.getParametersObj(ParamType.HEADER, target, propertyKey, ...args)
+                    const config = target.getParametersObj(ParamType.CONFIG, target, propertyKey, ...args)
                     this.getClient().get(finalUrl, {
+                        ...config,
                         headers,
                         header: headers
-                    }).then((res:any) => {
+                    }).then((res: any) => {
                         resolve(res)
-                    }).catch((e:any) => {
+                    }).catch((e: any) => {
                         if (mockOnFail) {
                             resolve(mockOnFail)
                         } else

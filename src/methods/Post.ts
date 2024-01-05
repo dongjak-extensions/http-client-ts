@@ -24,7 +24,9 @@ export function Post(url: string, mockOnFail?: any) {
                 originalMethod.apply(this, args).then(() => {
                     const finalUrl = target.buildFinalUrl(url, target, propertyKey, ...args)
                     const headers = target.getParametersObj(ParamType.HEADER, target, propertyKey, ...args)
+                    const config = target.getParametersObj(ParamType.CONFIG, target, propertyKey, ...args)
                     this.getClient().post(finalUrl, target.getRequestBodyParam(target, propertyKey, ...args), {
+                        ...config,
                         headers,
                         header: headers
                     }).then((res: any) => {
