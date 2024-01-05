@@ -1,3 +1,15 @@
+# [3.0.0](https://github.com/dongjak-extensions/http-client-ts/compare/v2.0.0...v3.0.0) (2024-01-05)
+
+
+### Features
+
+* 新增Config注解 ([4258f82](https://github.com/dongjak-extensions/http-client-ts/commit/4258f82b8d4ca4587f25b15a16d21bf152f1e4f1))
+
+
+### BREAKING CHANGES
+
+* 1111
+
 # [2.0.0](https://github.com/dongjak-extensions/http-client-ts/compare/v1.0.0...v2.0.0) (2023-11-26)
 
 
