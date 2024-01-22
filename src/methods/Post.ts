@@ -22,13 +22,15 @@ export function Post(url: string, mockOnFail?: any) {
         descriptor.value = function (...args: any[]) {
             return new Promise((resolve, reject) => {
                 originalMethod.apply(this, args).then(() => {
-                    const finalUrl = target.buildFinalUrl(url, target, propertyKey, ...args)
+                    let finalUrl = target.buildFinalUrl(url, target, propertyKey, ...args)
                     const headers = target.getParametersObj(ParamType.HEADER, target, propertyKey, ...args)
-                    const config = target.getParametersObj(ParamType.CONFIG, target, propertyKey, ...args)
-                    this.getClient().post(finalUrl, target.getRequestBodyParam(target, propertyKey, ...args), {
-                        ...config,
+                    const config = target.getClientConfig(target, propertyKey, ...args)
+                    if(config&&config.url)  finalUrl= target.buildFinalUrl(config.url  , target, propertyKey, ...args)
+                    const body = target.getRequestBodyParam(target, propertyKey, ...args)
+                    //@ts-ignore
+                    this.getClient().post(finalUrl, body, {
                         headers,
-                        header: headers
+                        ...config,
                     }).then((res: any) => {
                         resolve(res)
                     }).catch((e: any) => {

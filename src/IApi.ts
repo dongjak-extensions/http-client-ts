@@ -6,7 +6,7 @@ export enum ParamType {
     QUERY = "_query_params",
     HEADER = "_header_params",
     BODY = "_request_body",
-    CONFIG = "_config_params"
+    CONFIG = "_client_config"
 }
 
 /**
@@ -19,7 +19,8 @@ export enum ParamType {
 export interface IApi {
     getClient(): AxiosInstance | HttpRequest | undefined
 
-    getRequestBodyParam(target: IApi, propertyKey: PropertyKey, ...args: any[]): { [key: string]: number }
+    getRequestBodyParam(target: IApi, propertyKey: PropertyKey, ...args: any[]): { [key: string]: any }
+    getClientConfig(target: IApi, propertyKey: PropertyKey, ...args: any[]): { [key: string]: any }
 
     getParametersObj(type: ParamType, target: IApi, propertyKey: PropertyKey, ...args: any[]): { [key: string]: string }
 

@@ -12,7 +12,7 @@
  * @since 1.0
  * @date 2023/10/18
  */
-export function RequestHeader(paramName: string) {
+export function  Header(paramName: string) {
     return function (target: any, propertyKey: string | symbol, parameterIndex: number) {
         const metadataKey = `${propertyKey.toString()}_header_params`;
         const headerParams: { [key: string]: number } = Reflect.getOwnMetadata(metadataKey, target, propertyKey) || {};

@@ -4,6 +4,7 @@ import HttpRequest from "luch-request";
 import {AxiosInstance} from "axios";
 import {objectToQueryString} from "./util";
 import 'reflect-metadata'
+import {type} from "node:os";
 
 
 /**
@@ -46,6 +47,16 @@ export class DefaultApiImpl implements IApi {
 
         return args[bodyParams['request_body_index']]
     }
+
+    getClientConfig(target: IApi, propertyKey: PropertyKey, ...args: any[]): { [p: string]: number } {
+        const requestBodyParamsMetadataKey = `${propertyKey.toString()}${ParamType.CONFIG}`;
+        const clientConfigs: {
+            [key: string]: number
+        } = Reflect.getOwnMetadata(requestBodyParamsMetadataKey, target, propertyKey as string) || {};
+
+        return args[clientConfigs['axios_config_index']]
+    }
+
 
     buildFinalUrl(originUrl: string, target: IApi, propertyKey: PropertyKey, ...args: any[]) {
         let finalUrl = originUrl;

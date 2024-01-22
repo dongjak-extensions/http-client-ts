@@ -13,7 +13,7 @@ import {IApi, ParamType} from "../IApi";
  * @since 1.0
  * @date 2023/10/18
  */
-export function RequestBody() {
+export function  Body() {
     return function (target: IApi, propertyKey: string | symbol, parameterIndex: number) {
         const metadataKey = `${propertyKey.toString()}${ParamType.BODY}`;
         const requestBodyParams: {
