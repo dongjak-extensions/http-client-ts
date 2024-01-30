@@ -1,3 +1,10 @@
+# [v3.1.0](https://github.com/dongjak-extensions/http-client-ts/compare/v3.0.0...v3.1.0) (2024-01-30)
+
+## ✨ New Features
+- [`28fdee4`](https://github.com/dongjak-extensions/http-client-ts/commit/28fdee4)  openai文件管理后台 
+- [`bffaae5`](https://github.com/dongjak-extensions/http-client-ts/commit/bffaae5)  针对@Query注解优化生成查询字符串的逻辑 
+- [`434027f`](https://github.com/dongjak-extensions/http-client-ts/commit/434027f)  针对@Query注解优化生成查询字符串的逻辑
+
 # [3.0.0](https://github.com/dongjak-extensions/http-client-ts/compare/v2.0.0...v3.0.0) (2024-01-05)
 
 
