@@ -12,16 +12,23 @@
  * // name=dongjak&age=18
  * ```
  * @param obj 要转换的对象
+ * @param rootStr 根字符串
  * @return {string} 转换后的查询字符串
  */
-export const objectToQueryString = (obj: { [key: string]: any }): string => {
-    let str = '';
-    for (let key in obj) {
-        if (str !== '') {
-            str += '&';
+export const objectToQueryString = (obj: { [key: string]: any }, rootStr = ""): string => {
+    Object.keys(obj).filter(k=> obj[k]).forEach(key=>{
+        if (rootStr !== ''  ) {
+            rootStr += '&';
         }
-        str += encodeURIComponent(key) + '=' + encodeURIComponent(obj[key]);
-    }
-    return str;
+
+        if (obj[key] instanceof Object) {
+            rootStr += objectToQueryString(obj[key]);
+        } else if (obj[key]) {
+            rootStr += encodeURIComponent(key) + '=' + encodeURIComponent(obj[key]);
+        }
+    })
+
+
+    return rootStr;
 }
 
