@@ -22,6 +22,7 @@ export const createApi = <T extends new (...args: any) => IApi>(api: T, client: 
 
 export * from './src/methods/Get'
 export * from './src/methods/Post'
+export * from './src/methods/Delete'
 export * from './src/parameters/Path'
 export * from './src/parameters/Query'
 export * from './src/parameters/Config'

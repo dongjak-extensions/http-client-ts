@@ -1,5 +1,5 @@
 import axios, {AxiosResponse} from "axios";
-import {createApi, DefaultApiImpl, Get, Path, Post, Body, Header, objectToQueryString, Query} from "../index";
+import {createApi, DefaultApiImpl, Get, Path, Post, Body, Header, objectToQueryString, Query, Delete} from "../index";
 
 type GetPaymentMethodsForm = {
     gatewayType?: string;
@@ -23,8 +23,27 @@ class TestApi extends DefaultApiImpl {
     getMethods(@Query("form") form: GetPaymentMethodsForm): Promise<AxiosResponse> {
         return Promise.resolve() as any;
     }
+
+
+    @Delete('/api/assistant/session/:sessionId')
+    deleteSession(@Path("sessionId") sessionId: string): Promise<AxiosResponse> {
+        return Promise.resolve() as any;
+    }
 }
 
+test("deleteSession", async () => {
+    const Axios = axios.create({
+        baseURL: "http://localhost:8084/",
+        timeout: 1000 * 10,
+        headers: {
+            "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMzI3MTk3Njg1OSIsImlhdCI6MTcwNjU1NzUzMSwiZXhwIjoxNzA3MTYyMzMxfQ.ABGXugPtycUSH8UOa7zjYetv7ZuTiTLEueG5tBr11jk"
+        },
+        responseType: 'json',
+    })
+    //await Axios.get("http://localhost:8084/unified_pay/methods")
+    const carsApi = createApi(TestApi, Axios)
+    console.log((await carsApi.deleteSession("thread_wgfBfC1QLaoqAd9Bt1bCFbmn")).data)
+})
 test("getMethods", async () => {
     const Axios = axios.create({
         baseURL: "http://localhost:8084/",
