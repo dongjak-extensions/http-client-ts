@@ -1,3 +1,8 @@
+# [v3.2.0](https://github.com/dongjak-extensions/http-client-ts/compare/v3.1.0...v3.2.0) (2024-02-01)
+
+## ✨ New Features
+- [`d1067b6`](https://github.com/dongjak-extensions/http-client-ts/commit/d1067b6)  使用@Delete发送Http DELETE请求
+
 # [v3.1.0](https://github.com/dongjak-extensions/http-client-ts/compare/v3.0.0...v3.1.0) (2024-01-30)
 
 ## ✨ New Features
