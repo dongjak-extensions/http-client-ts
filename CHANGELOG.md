@@ -1,3 +1,8 @@
+# [v3.3.0](https://github.com/dongjak-extensions/http-client-ts/compare/v3.2.0...v3.3.0) (2024-02-03)
+
+## ✨ New Features
+- [`9061626`](https://github.com/dongjak-extensions/http-client-ts/commit/9061626)  使用@FormData将请求体转换为多部分表单
+
 # [v3.2.0](https://github.com/dongjak-extensions/http-client-ts/compare/v3.1.0...v3.2.0) (2024-02-01)
 
 ## ✨ New Features
