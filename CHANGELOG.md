@@ -1,3 +1,8 @@
+# [v3.3.1](https://github.com/dongjak-extensions/http-client-ts/compare/v3.3.0...v3.3.1) (2024-02-03)
+
+## 🐛 Bug Fixes
+- [`49534b2`](https://github.com/dongjak-extensions/http-client-ts/commit/49534b2)  修复未定义@FormData时导致无法发送Post请求的错误
+
 # [v3.3.0](https://github.com/dongjak-extensions/http-client-ts/compare/v3.2.0...v3.3.0) (2024-02-03)
 
 ## ✨ New Features
