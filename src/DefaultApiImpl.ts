@@ -54,21 +54,22 @@ export class DefaultApiImpl implements IApi {
     getFormDataParam(target: IApi, propertyKey: PropertyKey, ...args: any[]): FormData {
         const formDataParameterMetadataKey = `${propertyKey.toString()}${ParamType.FORM_DATA}`;
         const formDataParameter = Reflect.getOwnMetadata(formDataParameterMetadataKey, target, propertyKey as string) as FormDataParameter
+        if (formDataParameter) {
+            const formData = new FormData()
+            Object.entries(args[formDataParameter.parameterIndex]).forEach(([key, value]) => {
+                if (formDataParameter.fileProps.includes(key)) {
+                    if (Array.isArray(value)) {
+                        value.forEach((file: File) => {
+                            formData.append(key, file)
+                        })
+                    } else formData.append(key, value as File)
+                } else {
+                    formData.append(key, value as string)
+                }
+            })
 
-        const formData = new FormData()
-        Object.entries(args[formDataParameter.parameterIndex]).forEach(([key, value]) => {
-            if (formDataParameter.fileProps.includes(key)) {
-                if (Array.isArray(value)) {
-                    value.forEach((file: File) => {
-                        formData.append(key, file)
-                    })
-                } else formData.append(key, value as File)
-            } else {
-                formData.append(key, value as string)
-            }
-        })
-
-        return formData
+            return formData
+        }
     }
 
     getClientConfig(target: IApi, propertyKey: PropertyKey, ...args: any[]): { [p: string]: number } {

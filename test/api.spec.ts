@@ -125,7 +125,7 @@ test("objectToQueryString", async () => {
 test('simpleFunction returns correct value', async () => {
     // expect(1==1);
     const Axios = axios.create({
-        baseURL: "http://localhost:8082/",
+        baseURL: "http://localhost:8084/",
         timeout: 1000 * 10,
         responseType: 'json',
     })
