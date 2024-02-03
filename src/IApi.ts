@@ -1,12 +1,14 @@
 import {AxiosInstance} from "axios";
 import HttpRequest from "luch-request";
+import {FormDataParameter} from "./parameters/FormData";
 
 export enum ParamType {
     PATH = "_path_params",
     QUERY = "_query_params",
     HEADER = "_header_params",
     BODY = "_request_body",
-    CONFIG = "_client_config"
+    CONFIG = "_client_config",
+    FORM_DATA = "_form_data"
 }
 
 /**
@@ -18,7 +20,7 @@ export enum ParamType {
  */
 export interface IApi {
     getClient(): AxiosInstance | HttpRequest | undefined
-
+    getFormDataParam(target: IApi, propertyKey: PropertyKey, ...args: any[]): FormData
     getRequestBodyParam(target: IApi, propertyKey: PropertyKey, ...args: any[]): { [key: string]: any }
     getClientConfig(target: IApi, propertyKey: PropertyKey, ...args: any[]): { [key: string]: any }
 

@@ -4,7 +4,8 @@ import HttpRequest from "luch-request";
 import {AxiosInstance} from "axios";
 import {objectToQueryString} from "./util";
 import 'reflect-metadata'
-import {type} from "node:os";
+import {FormDataParameter} from "./parameters/FormData";
+import {File} from "node:buffer";
 
 
 /**
@@ -20,6 +21,7 @@ export class DefaultApiImpl implements IApi {
     constructor(client: AxiosInstance | HttpRequest | undefined) {
         this.client = client;
     }
+
 
     getParametersObj(type: ParamType, target: IApi, propertyKey: PropertyKey, ...args: any[]) {
         const paramObj: { [key: string]: string } = {}
@@ -46,6 +48,27 @@ export class DefaultApiImpl implements IApi {
         } = Reflect.getOwnMetadata(requestBodyParamsMetadataKey, target, propertyKey as string) || {};
 
         return args[bodyParams['request_body_index']]
+    }
+
+
+    getFormDataParam(target: IApi, propertyKey: PropertyKey, ...args: any[]): FormData {
+        const formDataParameterMetadataKey = `${propertyKey.toString()}${ParamType.FORM_DATA}`;
+        const formDataParameter = Reflect.getOwnMetadata(formDataParameterMetadataKey, target, propertyKey as string) as FormDataParameter
+
+        const formData = new FormData()
+        Object.entries(args[formDataParameter.parameterIndex]).forEach(([key, value]) => {
+            if (formDataParameter.fileProps.includes(key)) {
+                if (Array.isArray(value)) {
+                    value.forEach((file: File) => {
+                        formData.append(key, file)
+                    })
+                } else formData.append(key, value as File)
+            } else {
+                formData.append(key, value as string)
+            }
+        })
+
+        return formData
     }
 
     getClientConfig(target: IApi, propertyKey: PropertyKey, ...args: any[]): { [p: string]: number } {

@@ -25,10 +25,16 @@ export function Post(url: string, mockOnFail?: any) {
                     let finalUrl = target.buildFinalUrl(url, target, propertyKey, ...args)
                     const headers = target.getParametersObj(ParamType.HEADER, target, propertyKey, ...args)
                     const config = target.getClientConfig(target, propertyKey, ...args)
-                    if(config&&config.url)  finalUrl= target.buildFinalUrl(config.url  , target, propertyKey, ...args)
-                    const body = target.getRequestBodyParam(target, propertyKey, ...args)
+                    if (config && config.url) finalUrl = target.buildFinalUrl(config.url, target, propertyKey, ...args)
+                    let body = target.getRequestBodyParam(target, propertyKey, ...args)
+                    const formData = target.getFormDataParam(target, propertyKey, ...args)
+                    if (formData)
+                    {
+                        body = formData
+                        headers['Content-Type'] = 'multipart/form-data'
+                    }
                     //@ts-ignore
-                    this.getClient().post(finalUrl, body, {
+                    this.getClient().post(finalUrl, body  , {
                         headers,
                         ...config,
                     }).then((res: any) => {
