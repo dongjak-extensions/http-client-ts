@@ -50,7 +50,7 @@ export type MixResponse = Pick<Response, "ok" | "status" | "statusText" | "heade
     body?: ReadableStream<Uint8Array> | null
 }
 // @ts-ignore
-const fetchAdapter: AxiosAdapter = async (config: Config): AxiosPromise => {
+export const fetchAdapter: AxiosAdapter = async (config: Config): AxiosPromise => {
     const request = createRequest(config);
     const promiseChain = [getResponse(request, config)];
 
@@ -80,12 +80,7 @@ const fetchAdapter: AxiosAdapter = async (config: Config): AxiosPromise => {
         }
     });
 }
-/**
- * - Create a request object
- * - Get response body
- * - Check if timeout
- */
-export default fetchAdapter
+
 
 /**
  * Fetch API stage two is to get response body. This funtion tries to retrieve
