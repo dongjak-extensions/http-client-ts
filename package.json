@@ -1,6 +1,6 @@
 {
   "name": "@dongjak-extensions/http-client",
-  "version": "3.5.0",
+  "version": "3.6.0",
   "description": "声明式http客户端",
   "publishConfig": {
     "access": "public"
