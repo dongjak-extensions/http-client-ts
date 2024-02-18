@@ -1,3 +1,8 @@
+# [v3.6.0](https://github.com/dongjak-extensions/http-client-ts/compare/v3.5.0...v3.6.0) (2024-02-18)
+
+## ✨ New Features
+- [`d6ed045`](https://github.com/dongjak-extensions/http-client-ts/commit/d6ed045)  添加fetchAdapter
+
 # [v3.5.0](https://github.com/dongjak-extensions/http-client-ts/compare/v3.4.0...v3.5.0) (2024-02-18)
 
 ## ✨ New Features
