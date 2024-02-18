@@ -43,7 +43,7 @@ function isStandardBrowserEnv(): boolean {
 }
 
 export  type MixConfig = InternalAxiosRequestConfig & RequestInit
-export type MixResponse = Pick<Response, "ok" | "status" | "statusText" | "headers"> & {
+export type MixResponse = Partial<Response> & {
     config: MixConfig,
     request: Request,
     data?: any,
@@ -101,6 +101,12 @@ async function getResponse(request: Request, config: MixConfig): Promise<MixResp
         headers: new Headers(stageOne.headers), // Make a copy of headers
         config: config,
         request,
+        json(): Promise<any> {
+            return stageOne.json();
+        },
+        clone(): Response {
+            return stageOne.clone();
+        }
     };
 
     if (stageOne.status >= 200 && stageOne.status !== 204) {
