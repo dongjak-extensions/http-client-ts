@@ -42,12 +42,17 @@ function isStandardBrowserEnv(): boolean {
     return typeof window !== "undefined" && typeof document !== "undefined";
 }
 
-export  type MixConfig = InternalAxiosRequestConfig & RequestInit
-export type MixResponse = Partial<Response> & {
-    config: MixConfig,
+export  type AxiosFetchConfig = InternalAxiosRequestConfig & RequestInit
+export type AxiosFetchResponse =   {
+    ok: boolean,
+    status: number,
+    statusText: string,
+    headers: Headers,
+    config: AxiosFetchConfig,
     request: Request,
     data?: any,
     body?: ReadableStream<Uint8Array> | null
+    fetchResponse:Response
 }
 // @ts-ignore
 export const fetchAdapter: AxiosAdapter = async (config: Config): AxiosPromise => {
@@ -86,7 +91,7 @@ export const fetchAdapter: AxiosAdapter = async (config: Config): AxiosPromise =
  * Fetch API stage two is to get response body. This funtion tries to retrieve
  * response body based on response's type
  */
-async function getResponse(request: Request, config: MixConfig): Promise<MixResponse> {
+async function getResponse(request: Request, config: AxiosFetchConfig): Promise<AxiosFetchResponse> {
     let stageOne: Response;
     try {
         stageOne = await fetch(request);
@@ -94,19 +99,14 @@ async function getResponse(request: Request, config: MixConfig): Promise<MixResp
         return createError("Network Error", config, "ERR_NETWORK", request);
     }
 
-    const response: MixResponse = {
+    const response: AxiosFetchResponse = {
+        fetchResponse:stageOne.clone(),
         ok: stageOne.ok,
         status: stageOne.status,
         statusText: stageOne.statusText,
         headers: new Headers(stageOne.headers), // Make a copy of headers
         config: config,
-        request,
-        json(): Promise<any> {
-            return stageOne.json();
-        },
-        clone(): Response {
-            return stageOne.clone();
-        }
+        request ,
     };
 
     if (stageOne.status >= 200 && stageOne.status !== 204) {
@@ -140,7 +140,7 @@ async function getResponse(request: Request, config: MixConfig): Promise<MixResp
 /**
  * This function will create a Request object based on configuration's axios
  */
-function createRequest(config: MixConfig) {
+function createRequest(config: AxiosFetchConfig) {
     const headers = new Headers(config.headers);
 
     // HTTP basic authentication
@@ -211,7 +211,7 @@ function createRequest(config: MixConfig) {
  * @param {Object} [response] The response.
  * @returns {Error} The created error.
  */
-function createError(message: string, config: MixConfig, code: string, request: Request, response?: any) {
+function createError(message: string, config: AxiosFetchConfig, code: string, request: Request, response?: any) {
     if (axios.AxiosError && typeof axios.AxiosError === "function") {
 
         return new axios.AxiosError(
