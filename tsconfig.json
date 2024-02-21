@@ -3,6 +3,7 @@
     "module": "ESNext",
     "target": "ESNext",
     "sourceMap": true,
+    "strict": true,
     "outDir": "dist",
     "declaration": true,
     "moduleResolution": "node",

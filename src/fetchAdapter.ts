@@ -1,4 +1,11 @@
-import axios, {AxiosAdapter, AxiosPromise, InternalAxiosRequestConfig, ResponseType} from "axios";
+import axios, {
+    AxiosAdapter,
+    AxiosHeaders,
+    AxiosPromise, AxiosRequestConfig,
+    AxiosResponse,
+    InternalAxiosRequestConfig,
+    ResponseType
+} from "axios";
 // @ts-ignore
 import settle from "axios/unsafe/core/settle";
 // @ts-ignore
@@ -42,25 +49,13 @@ function isStandardBrowserEnv(): boolean {
     return typeof window !== "undefined" && typeof document !== "undefined";
 }
 
-export  type AxiosFetchConfig = InternalAxiosRequestConfig & RequestInit
-export type AxiosFetchResponse =   {
-    ok: boolean,
-    status: number,
-    statusText: string,
-    headers: Headers,
-    config: AxiosFetchConfig,
-    request: Request,
-    data?: any,
-    body?: ReadableStream<Uint8Array> | null
-    fetchResponse:Response
-}
-// @ts-ignore
-export const fetchAdapter: AxiosAdapter = async (config: Config): AxiosPromise => {
+
+export const fetchAdapter: AxiosAdapter = async (config: InternalAxiosRequestConfig): AxiosPromise => {
     const request = createRequest(config);
-    const promiseChain = [getResponse(request, config)];
+    const promises:Promise<any>[] = [getResponse(request, config)];
 
     if (config.timeout && config.timeout > 0) {
-        promiseChain.push(
+        promises.push(
             new Promise((res) => {
                 setTimeout(() => {
                     const message = config.timeoutErrorMessage
@@ -72,7 +67,7 @@ export const fetchAdapter: AxiosAdapter = async (config: Config): AxiosPromise =
         );
     }
 
-    const data = await Promise.race(promiseChain);
+    const data = await Promise.race(promises);
     return new Promise((resolve, reject) => {
         if (data instanceof Error) {
             reject(data);
@@ -86,61 +81,66 @@ export const fetchAdapter: AxiosAdapter = async (config: Config): AxiosPromise =
     });
 }
 
+export const fetchResponseToAxiosResponse = async  (fetchResponse:Response ,config?: InternalAxiosRequestConfig , request?:any) => {
+    const headers:Record<string, any> = {}
+    fetchResponse.headers.forEach((value, key) => {
+        headers[key] = value;
+    })
 
-/**
- * Fetch API stage two is to get response body. This funtion tries to retrieve
- * response body based on response's type
- */
-async function getResponse(request: Request, config: AxiosFetchConfig): Promise<AxiosFetchResponse> {
-    let stageOne: Response;
-    try {
-        stageOne = await fetch(request);
-    } catch (e) {
-        return createError("Network Error", config, "ERR_NETWORK", request);
-    }
 
-    const response: AxiosFetchResponse = {
-        fetchResponse:stageOne.clone(),
-        ok: stageOne.ok,
-        status: stageOne.status,
-        statusText: stageOne.statusText,
-        headers: new Headers(stageOne.headers), // Make a copy of headers
-        config: config,
-        request ,
+    const response: AxiosResponse = {
+        status: fetchResponse.status,
+        statusText: fetchResponse.statusText,
+        headers: AxiosHeaders.from(headers),
+        config: config ?? {} as InternalAxiosRequestConfig,
+        request:request,
+        data: fetchResponse.body
     };
 
-    if (stageOne.status >= 200 && stageOne.status !== 204) {
+    if (fetchResponse.status >= 200 && fetchResponse.status !== 204 && config) {
 
         switch (config.responseType) {
             case "arraybuffer":
-                response.data = await stageOne.arrayBuffer();
+                response.data = await fetchResponse.arrayBuffer();
                 break;
             case "blob":
-                response.data = await stageOne.blob();
+                response.data = await fetchResponse.blob();
                 break;
             case "json":
-                response.data = await stageOne.json();
-                break;
-            // @ts-ignore
-            case "formData":
-                response.data = await stageOne.formData();
+                response.data = await fetchResponse.json();
                 break;
             case "stream":
-                response.body = stageOne.body
+                response.data = fetchResponse.body
                 break
             default:
-                response.data = await stageOne.text();
+                response.data = await fetchResponse.text();
                 break;
         }
     }
 
-    return response;
+    return response
+}
+/**
+ * Fetch API stage two is to get response body. This funtion tries to retrieve
+ * response body based on response's type
+ */
+async function getResponse(request: Request, config: InternalAxiosRequestConfig): Promise<AxiosResponse> {
+    let fetchResponse: Response;
+    try {
+        fetchResponse = await fetch(request);
+    } catch (e) {
+        return createError("Network Error", config, "ERR_NETWORK", request);
+    }
+
+     // const mirror = fetchResponse.clone()
+
+    return    fetchResponseToAxiosResponse(fetchResponse,config,request);
 }
 
 /**
  * This function will create a Request object based on configuration's axios
  */
-function createRequest(config: AxiosFetchConfig) {
+function createRequest(config: InternalAxiosRequestConfig) {
     const headers = new Headers(config.headers);
 
     // HTTP basic authentication
@@ -166,7 +166,7 @@ function createRequest(config: AxiosFetchConfig) {
             headers.delete("Content-Type");
         }
     }
-    if (config.mode) {
+    /*if (config.mode) {
         options.mode = config.mode;
     }
     if (config.cache) {
@@ -180,7 +180,7 @@ function createRequest(config: AxiosFetchConfig) {
     }
     if (config.referrer) {
         options.referrer = config.referrer;
-    }
+    }*/
     // This config is similar to XHR’s withCredentials flag, but with three available values instead of two.
     // So if withCredentials is not set, default value 'same-origin' will be used
     if (!isUndefined(config.withCredentials)) {
@@ -211,7 +211,7 @@ function createRequest(config: AxiosFetchConfig) {
  * @param {Object} [response] The response.
  * @returns {Error} The created error.
  */
-function createError(message: string, config: AxiosFetchConfig, code: string, request: Request, response?: any) {
+function createError(message: string, config: InternalAxiosRequestConfig, code: string, request: Request, response?: any) {
     if (axios.AxiosError && typeof axios.AxiosError === "function") {
 
         return new axios.AxiosError(

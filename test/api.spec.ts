@@ -56,7 +56,7 @@ class TestApi extends DefaultApiImpl {
         return Promise.resolve() as any;
     }
 }
-
+//@ts-ignore
 test("testFormData", async () => {
     // const fs = require('fs');
 
@@ -80,6 +80,7 @@ test("testFormData", async () => {
         files: [file]
     })).data)
 })
+//@ts-ignore
 test("deleteSession", async () => {
     const Axios = axios.create({
         baseURL: "http://localhost:8084/",
@@ -93,6 +94,7 @@ test("deleteSession", async () => {
     const carsApi = createApi(TestApi, Axios)
     console.log((await carsApi.deleteSession("thread_wgfBfC1QLaoqAd9Bt1bCFbmn")).data)
 })
+//@ts-ignore
 test("getMethods", async () => {
     const Axios = axios.create({
         baseURL: "http://localhost:8084/",
@@ -108,7 +110,9 @@ test("getMethods", async () => {
         gatewayType: "WECHATPAY"
     }))
 })
+//@ts-ignore
 test("objectToQueryString", async () => {
+    //@ts-ignore
     expect(objectToQueryString({
         a: 1,
         b: undefined,
@@ -116,12 +120,13 @@ test("objectToQueryString", async () => {
             d: 1
         }
     })).toBe("a=1&d=1")
-
+//@ts-ignore
     expect(objectToQueryString({
         username: "dongjak",
         password: "123456"
     })).toBe("username=dongjak&password=123456")
 })
+//@ts-ignore
 test('simpleFunction returns correct value', async () => {
     // expect(1==1);
     const Axios = axios.create({

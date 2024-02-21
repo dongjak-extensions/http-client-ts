@@ -51,6 +51,7 @@ export class DefaultApiImpl implements IApi {
     }
 
 
+    // @ts-ignore
     getFormDataParam(target: IApi, propertyKey: PropertyKey, ...args: any[]): FormData {
         const formDataParameterMetadataKey = `${propertyKey.toString()}${ParamType.FORM_DATA}`;
         const formDataParameter = Reflect.getOwnMetadata(formDataParameterMetadataKey, target, propertyKey as string) as FormDataParameter
@@ -60,8 +61,10 @@ export class DefaultApiImpl implements IApi {
                 if (formDataParameter.fileProps.includes(key)) {
                     if (Array.isArray(value)) {
                         value.forEach((file: File) => {
+                            // @ts-ignore
                             formData.append(key, file)
                         })
+                        // @ts-ignore
                     } else formData.append(key, value as File)
                 } else {
                     formData.append(key, value as string)
