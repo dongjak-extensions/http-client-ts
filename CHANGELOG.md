@@ -1,3 +1,8 @@
+# [v3.7.1](https://github.com/dongjak-extensions/http-client-ts/compare/v3.7.0...v3.7.1) (2024-02-23)
+
+## 🐛 Bug Fixes
+- [`45d5725`](https://github.com/dongjak-extensions/http-client-ts/commit/45d5725)  解决移动端无法正常使用语音输入的问题 (Issues: [`#13`](https://github.com/dongjak-extensions/http-client-ts/issues/13))
+
 # [v3.7.0](https://github.com/dongjak-extensions/http-client-ts/compare/v3.6.0...v3.7.0) (2024-02-18)
 
 ## ✨ New Features
