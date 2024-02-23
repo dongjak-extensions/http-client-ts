@@ -57,10 +57,7 @@ export class DefaultApiImpl implements IApi {
         const formDataParameter = Reflect.getOwnMetadata(formDataParameterMetadataKey, target, propertyKey as string) as FormDataParameter
         if (formDataParameter) {
             const argValue = args[formDataParameter.parameterIndex]
-            if (argValue instanceof FormData){
-                console.log(`argValue`, argValue)
-                return argValue
-            }
+            if (argValue instanceof FormData) return argValue
             else {
 
                 const formData = new FormData()
