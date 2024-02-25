@@ -1,10 +1,9 @@
 import axios, {
     AxiosAdapter,
     AxiosHeaders,
-    AxiosPromise, AxiosRequestConfig,
+    AxiosPromise,
     AxiosResponse,
-    InternalAxiosRequestConfig,
-    ResponseType
+    InternalAxiosRequestConfig
 } from "axios";
 // @ts-ignore
 import settle from "axios/unsafe/core/settle";
@@ -52,7 +51,7 @@ function isStandardBrowserEnv(): boolean {
 
 export const fetchAdapter: AxiosAdapter = async (config: InternalAxiosRequestConfig): AxiosPromise => {
     const request = createRequest(config);
-    const promises:Promise<any>[] = [getResponse(request, config)];
+    const promises: Promise<any>[] = [getResponse(request, config)];
 
     if (config.timeout && config.timeout > 0) {
         promises.push(
@@ -81,8 +80,8 @@ export const fetchAdapter: AxiosAdapter = async (config: InternalAxiosRequestCon
     });
 }
 
-export const fetchResponseToAxiosResponse = async  (fetchResponse:Response ,config?: InternalAxiosRequestConfig , request?:any) => {
-    const headers:Record<string, any> = {}
+export const fetchResponseToAxiosResponse = async (fetchResponse: Response, config?: InternalAxiosRequestConfig, request?: any) => {
+    const headers: Record<string, any> = {}
     fetchResponse.headers.forEach((value, key) => {
         headers[key] = value;
     })
@@ -93,7 +92,7 @@ export const fetchResponseToAxiosResponse = async  (fetchResponse:Response ,conf
         statusText: fetchResponse.statusText,
         headers: AxiosHeaders.from(headers),
         config: config ?? {} as InternalAxiosRequestConfig,
-        request:request,
+        request: request,
         data: fetchResponse.body
     };
 
@@ -120,6 +119,7 @@ export const fetchResponseToAxiosResponse = async  (fetchResponse:Response ,conf
 
     return response
 }
+
 /**
  * Fetch API stage two is to get response body. This funtion tries to retrieve
  * response body based on response's type
@@ -132,9 +132,9 @@ async function getResponse(request: Request, config: InternalAxiosRequestConfig)
         return createError("Network Error", config, "ERR_NETWORK", request);
     }
 
-     // const mirror = fetchResponse.clone()
+    // const mirror = fetchResponse.clone()
 
-    return    fetchResponseToAxiosResponse(fetchResponse,config,request);
+    return fetchResponseToAxiosResponse(fetchResponse, config, request);
 }
 
 /**

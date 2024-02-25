@@ -1,6 +1,5 @@
 import {AxiosInstance} from "axios";
 import HttpRequest from "luch-request";
-import {FormDataParameter} from "./parameters/FormData";
 
 export enum ParamType {
     PATH = "_path_params",
