@@ -1,3 +1,8 @@
+# [v3.7.3](https://github.com/dongjak-extensions/http-client-ts/compare/v3.7.2...v3.7.3) (2024-03-06)
+
+## 🐛 Bug Fixes
+- [`ed776a4`](https://github.com/dongjak-extensions/http-client-ts/commit/ed776a4)  修复ts报错
+
 # [v3.7.2](https://github.com/dongjak-extensions/http-client-ts/compare/v3.7.1...v3.7.2) (2024-03-06)
 
 ## 🐛 Bug Fixes
