@@ -1,3 +1,9 @@
+# [v3.7.2](https://github.com/dongjak-extensions/http-client-ts/compare/v3.7.1...v3.7.2) (2024-03-06)
+
+## 🐛 Bug Fixes
+- [`3552e72`](https://github.com/dongjak-extensions/http-client-ts/commit/3552e72)  修复FormData无法正确处理多个文件的问题 
+- [`3fb6d1b`](https://github.com/dongjak-extensions/http-client-ts/commit/3fb6d1b)  修复FormData无法正确处理多个文件的问题
+
 # [v3.7.1](https://github.com/dongjak-extensions/http-client-ts/compare/v3.7.0...v3.7.1) (2024-02-23)
 
 ## 🐛 Bug Fixes
