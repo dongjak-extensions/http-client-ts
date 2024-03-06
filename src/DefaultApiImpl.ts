@@ -64,9 +64,9 @@ export class DefaultApiImpl implements IApi {
                 Object.entries(argValue).forEach(([key, value]) => {
                     if (formDataParameter.fileProps.includes(key)) {
                         if (Array.isArray(value)) {
-                            value.forEach((file: File) => {
+                            value.forEach((file: File,index) => {
                                 // @ts-ignore
-                                formData.append(key, file)
+                                formData.append(`${key}[${index}]`, file as File)
                             })
                             // @ts-ignore
                         } else formData.append(key, value as File)
